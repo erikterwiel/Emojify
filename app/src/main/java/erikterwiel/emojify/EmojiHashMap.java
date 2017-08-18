@@ -14,10 +14,15 @@ public class EmojiHashMap extends HashMap<String, ArrayList<String>> {
     public EmojiHashMap() {
         super();
 
-        stringList.add(getEmoji(0x1F64C)); // raising hands
-        stringList.add(getEmoji(0x270A));  // raised fist
         stringList.add(getEmoji(0x1F4AF)); // 100
         put("be", stringList);
+        put("real", stringList);
+        put("genuine", stringList);
+        put("100", stringList);
+        put("legit", stringList);
+
+        stringList.add(getEmoji(0x1F64C)); // raising hands
+        stringList.add(getEmoji(0x270A));  // raised fist
 
 
         clearList();
@@ -42,6 +47,7 @@ public class EmojiHashMap extends HashMap<String, ArrayList<String>> {
         put("yes", stringList);
         put("correct", stringList);
         put("extremely", stringList);
+        put("great", stringList);
 
         stringList.add(getEmoji(0x1F449)); // pointing right
         put("right", stringList);
@@ -56,6 +62,11 @@ public class EmojiHashMap extends HashMap<String, ArrayList<String>> {
         put("rapid", stringList);
         put("fast", stringList);
         put("quick", stringList);
+        put("quickly", stringList);
+        put("go", stringList);
+        put("rush", stringList);
+        put("rushed", stringList);
+        put("go", stringList);
 
 
         clearList();
@@ -77,9 +88,151 @@ public class EmojiHashMap extends HashMap<String, ArrayList<String>> {
         put("time", stringList);
         put("clock", stringList);
         put("years", stringList);
-
+        put("forever", stringList);
+        put("when", stringList);
 
         clearList();
+        stringList.add(getEmoji(0x1F602)); // laughing crying face
+        stringList.add(getEmoji(0x1F606)); // laughing closed eye face
+        stringList.add(getEmoji(0x1F601)); // laughing face
+        put("lol", stringList);
+        put("laugh", stringList);
+        put("laughed", stringList);
+        put("lmao", stringList);
+        put("lmfao", stringList);
+        put("funny", stringList);
+        put("hilarious", stringList);
+        put("hilariously", stringList);
+
+        put("leaked", stringList);
+
+        put("yesterday", stringList);
+
+        put("interest", stringList);
+        put("interesting", stringList);
+
+        put("stupid", stringList);
+        put("stupidly", stringList);
+        put("idiot", stringList);
+        put("dumb", stringList);
+
+        put("work", stringList);
+
+        put("annoying", stringList);
+
+        put("both", stringList);
+
+        put("road", stringList);
+
+        put("closed", stringList);
+
+        put("marine", stringList);
+
+        put("detour", stringList);
+
+        put("stop", stringList);
+        put("dont", stringList);
+        put("don't", stringList);
+        put("no", stringList);
+        put("bad", stringList);
+        put("not", stringList);
+        put("scam", stringList);
+        put("nothing", stringList);
+
+        put("dirty", stringList);
+        put("gross", stringList);
+        put("disguisting", stringList);
+
+        put("garbage", stringList);
+
+        put("phone", stringList);
+
+        put("car", stringList);
+
+        put("pretty", stringList);
+        put("beautiful", stringList);
+
+        put("residential", stringList);
+        put("residence", stringList);
+        put("home", stringList);
+        put("house", stringList);
+        put("place", stringList);
+        put("condo", stringList);
+        put("apartment", stringList);
+
+        put("prison", stringList);
+        put("jail", stringList);
+        put("penitentiary", stringList);
+        put("dogpound", stringList);
+
+        put("train", stringList);
+
+        put("smoke", stringList);
+        put("fire", stringList);
+        put("flame", stringList);
+        put("burn", stringList);
+
+        put("look", stringList);
+        put("scope", stringList);
+        put("find", stringList);
+
+        put("money", stringList);
+        put("cash", stringList);
+        put("sell", stringList);
+        put("buy", stringList);
+        put("trade", stringList);
+        put("tax", stringList);
+        put("rich", stringList);
+        put("loaded", stringList);
+        put("free", stringList);
+
+        put("store", stringList);
+
+        put("down", stringList);
+
+        put("laptop", stringList);
+        put("computer", stringList);
+
+        put("tree", stringList);
+        put("trees", stringList);
+        put("nature", stringList);
+        put("green", stringList);
+
+        put("light", stringList);
+        put("lights", stringList);
+        put("idea", stringList);
+
+        put("hit", stringList);
+        put("bang", stringList);
+        put("pow", stringList);
+        put("smack", stringList);
+        put("decked", stringList);
+        put("smacked", stringList);
+        put("crash", stringList);
+        put("crashed", stringList);
+
+        put("bottle", stringList);
+        put("liq", stringList);
+        put("liquor", stringList);
+        put("drink", stringList);
+        put("juice", stringList);
+        put("water", stringList);
+        put("liquid", stringList);
+        put("alcohol", stringList);
+
+        put("eat", stringList);
+        put("restaurant", stringList);
+        put("munch", stringList);
+        put("food", stringList);
+
+        put("message", stringList);
+        put("text", stringList);
+
+        put("bike",stringList);
+        put("bicycle", stringList);
+
+        put("hood", stringList);
+        put("trap", stringList);
     }
 
     private String getEmoji(int unicode) {
