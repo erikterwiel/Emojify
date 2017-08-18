@@ -1,5 +1,8 @@
 package erikterwiel.emojify;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -37,6 +40,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mSavedTexts.add(mTextOutput.getText().toString());
+            }
+        });
+
+        mCopyText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClipboardManager clipboardManager =
+                        (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData emojifiedText =
+                        ClipData.newPlainText("Emojified Text", mTextOutput.getText());
+                clipboardManager.setPrimaryClip(emojifiedText);
             }
         });
 
