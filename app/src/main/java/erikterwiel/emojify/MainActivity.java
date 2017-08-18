@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -29,12 +31,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mTextInput.findViewById(R.id.main_text_input);
-        mSaveText.findViewById(R.id.main_save_text);
-        mCopyText.findViewById(R.id.main_copy_text);
-        mEmojifyText.findViewById(R.id.main_emojify_text);
-        mTextOutput.findViewById(R.id.main_text_output);
-        mSavedTextList.findViewById(R.id.main_saved_text_list);
+        mTextInput = (EditText) findViewById(R.id.main_text_input);
+        mSaveText = (Button) findViewById(R.id.main_save_text);
+        mCopyText = (Button) findViewById(R.id.main_copy_text);
+        mEmojifyText = (Button) findViewById(R.id.main_emojify_text);
+        mTextOutput = (TextView) findViewById(R.id.main_text_output);
+        mSavedTextList = (RecyclerView) findViewById(R.id.main_saved_text_list);
 
         mSaveText.setOnClickListener(new View.OnClickListener() {
             @Override
