@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    private EmojiHashMap mDatabase;
     private ArrayList<String> mSavedTexts;
 
     private EditText mTextInput;
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mDatabase = new EmojiHashMap();
 
         mTextInput = (EditText) findViewById(R.id.main_text_input);
         mSaveText = (Button) findViewById(R.id.main_save_text);
@@ -67,6 +70,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String emojifyString(String input) {
-        return input;
+        String output;
+        String[] inputSplit = input.split(" ");
+        for (String upperCaseInput : inputSplit) {
+            String lowerCaseInput = upperCaseInput.toLowerCase();
+            ArrayList<String> emojiList = mDatabase.get(lowerCaseInput);
+
+        }
+        return output;
     }
 }
