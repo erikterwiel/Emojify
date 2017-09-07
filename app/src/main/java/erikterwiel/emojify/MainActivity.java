@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -56,13 +57,15 @@ public class MainActivity extends AppCompatActivity {
                 ClipData emojifiedText =
                         ClipData.newPlainText("Emojified Text", mTextOutput.getText());
                 clipboardManager.setPrimaryClip(emojifiedText);
+                Toast.makeText(MainActivity.this, "Emojification copied", Toast.LENGTH_LONG).show();
             }
         });
 
         mEmojifyText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                emojifyString(mTextInput.getText().toString());
+                String output = emojifyString(mTextInput.getText().toString());
+                mTextOutput.setText(output);
             }
         });
 
@@ -70,12 +73,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String emojifyString(String input) {
-        String output;
+        String output = "";
         String[] inputSplit = input.split(" ");
         for (String upperCaseInput : inputSplit) {
             String lowerCaseInput = upperCaseInput.toLowerCase();
-            ArrayList<String> emojiList = mDatabase.get(lowerCaseInput);
-
+            if (mDatabase.containsKey(lowerCaseInput)) {
+                ArrayList<String> emojiList = mDatabase.get(lowerCaseInput);
+                int numOfEmoji = (int) ((Math.random() * 4) + 1);
+                int wordPosition = (int) (Math.random() * numOfEmoji);
+                for (int i = 0; i < numOfEmoji; i++) {
+                    if (i == wordPosition) {
+                        output += upperCaseInput;
+                    } else {
+                        if (!emojiList.isEmpty())
+                            output += emojiList.get((int) (Math.random() * emojiList.size()));
+                    }
+                    if (i == numOfEmoji - 1) output += " ";
+                }
+            } else {
+                output += upperCaseInput + " ";
+            }
         }
         return output;
     }
