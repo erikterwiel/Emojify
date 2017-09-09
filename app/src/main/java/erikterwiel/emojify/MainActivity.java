@@ -33,8 +33,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Loads saved texts
+        mSavedTexts = new ArrayList<String>();
+
+        // Creates the database
         mDatabase = new EmojiHashMap();
 
+        // Assigns widgets to objects
         mTextInput = (EditText) findViewById(R.id.main_text_input);
         mSaveText = (Button) findViewById(R.id.main_save_text);
         mCopyText = (Button) findViewById(R.id.main_copy_text);
@@ -42,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         mTextOutput = (TextView) findViewById(R.id.main_text_output);
         mSavedTextList = (RecyclerView) findViewById(R.id.main_saved_text_list);
 
+        // Saves texts to saved texts list on click
         mSaveText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Copies text to clipboard on click
         mCopyText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Emojifies string and displays output on click
         mEmojifyText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
