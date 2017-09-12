@@ -6,12 +6,21 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="8dp"
         android:orientation="vertical">
         <EditText
             android:id="@+id/main_text_input"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:inputType="textMultiLine"/>
+            android:layout_height="wrap_content"
+            android:gravity="top|start"
+            android:inputType="textCapSentences|textMultiLine"
+            android:hint="@string/main_hint"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:minLines="3"
+            android:maxLines="6"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -21,22 +30,26 @@
                 android:id="@+id/main_save_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:text="@string/save"/>
             <Button
                 android:id="@+id/main_copy_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:text="@string/copy"/>
             <Button
                 android:id="@+id/main_emojify_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:text="@string/emojify"/>
         </LinearLayout>
         <TextView
             android:id="@+id/main_text_output"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/main_saved_text_list"
             android:layout_width="match_parent"

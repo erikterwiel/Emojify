@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Emojify</string>
+    <string name="save">Save</string>
+    <string name="copy">Copy</string>
+    <string name="emojify">Emojify</string>
+    <string name="main_hint">Tap to enter text</string>
 </resources>
