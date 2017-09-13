@@ -3,4 +3,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="e_background">#e5e5e5</color>
+    <color name="e_primary">#4285f4</color>
+    <color name="e_statusBar">#356ac3</color>
+    <color name="e_accent">#4285f4</color>
 </resources>

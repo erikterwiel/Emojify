@@ -8,4 +8,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="Emojify" parent="AppTheme">
+        <item name="android:colorBackground">@color/e_background</item>
+        <item name="colorPrimary">@color/e_primary</item>
+        <item name="android:statusBarColor">@color/e_statusBar</item>
+        <item name="colorAccent">@color/e_accent</item>
+    </style>
+
 </resources>

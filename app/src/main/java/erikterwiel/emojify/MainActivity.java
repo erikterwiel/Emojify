@@ -6,11 +6,15 @@ import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,10 +29,12 @@ public class MainActivity extends AppCompatActivity {
     private RecentAdapter mRecentAdapter;
 
     private EditText mTextInput;
-    private Button mSaveText;
-    private Button mCopyText;
+    private ImageView mSaveText;
+    private ImageView mCopyText;
     private Button mEmojifyText;
+    private LinearLayout mSaveBar;
     private TextView mTextOutput;
+    private LinearLayout mCopyBar;
     private RecyclerView mRecentTextList;
 
     @Override
@@ -36,27 +42,30 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Loads saved texts
-        mSavedTexts = new ArrayList<String>();
+        // Loads recent texts
+        mRecentTexts = new ArrayList<String>();
 
         // Creates the database
         mDatabase = new EmojiHashMap();
 
         // Assigns widgets to objects
         mTextInput = (EditText) findViewById(R.id.main_text_input);
-        mSaveText = (Button) findViewById(R.id.main_save_text);
-        mCopyText = (Button) findViewById(R.id.main_copy_text);
+//        mSaveText = (Button) findViewById(R.id.main_save_text);
+        mCopyText = (ImageView) findViewById(R.id.main_copy_text);
         mEmojifyText = (Button) findViewById(R.id.main_emojify_text);
+        mSaveBar = (LinearLayout) findViewById(R.id.main_save_bar);
         mTextOutput = (TextView) findViewById(R.id.main_text_output);
+        mCopyBar = (LinearLayout) findViewById(R.id.main_copy_bar);
         mRecentTextList = (RecyclerView) findViewById(R.id.main_recent_text_list);
 
-        // Saves texts to saved texts list on click
+/*        // Saves texts to saved texts list on click
         mSaveText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mSavedTexts.add(mTextOutput.getText().toString());
             }
         });
+*/
 
         // Copies text to clipboard on click
         mCopyText.setOnClickListener(new View.OnClickListener() {
@@ -71,12 +80,27 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         // Emojifies string and displays output on click
+        mTextInput.setMinLines(3);
+        mTextInput.setMaxLines(1000);
+        mTextInput.setHorizontallyScrolling(false);
+        mTextInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_GO) {
+                    String output = emojifyString(mTextInput.getText().toString());
+                    handled = true;
+                }
+                return handled;
+            }
+        });
+
         mEmojifyText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String output = emojifyString(mTextInput.getText().toString());
-                mTextOutput.setText(output);
             }
         });
     }
@@ -108,6 +132,12 @@ public class MainActivity extends AppCompatActivity {
                 output += upperCaseInput + " ";
             }
         }
+        if (!input.equals("")) {
+            mSaveBar.setVisibility(View.VISIBLE);
+            mTextOutput.setVisibility(View.VISIBLE);
+            mCopyBar.setVisibility(View.VISIBLE);
+            mTextOutput.setText(output);
+        }
         return output;
     }
 
@@ -121,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public RecentHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(MainActivity.this);
-            View view = layoutInflater.inflate(R.layout)
+            View view = layoutInflater.inflate(R.layout);
         }
     }
 
