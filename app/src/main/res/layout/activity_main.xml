@@ -85,7 +85,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
             android:padding="16dp"
             android:gravity="end"
             android:background="@color/e_primary"
