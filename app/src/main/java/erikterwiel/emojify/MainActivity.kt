@@ -23,12 +23,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mRecentAdapter: RecentAdapter
 
     private lateinit var mTextInput: EditText
-    private lateinit var mSaveText: ImageView
-    private lateinit var mCopyText: ImageView
     private lateinit var mEmojifyText: Button
     private lateinit var mSaveBar: LinearLayout
+    private lateinit var mSaveText: ImageView
     private lateinit var mTextOutput: TextView
     private lateinit var mCopyBar: LinearLayout
+    private lateinit var mCopyText: ImageView
     private lateinit var mRecentTextList: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle) {
@@ -38,26 +38,34 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // Loads recent texts
-        mRecentTexts = ArrayList<String>()
+        mRecentTexts = Queue(10)
 
         // Creates the database
         mDatabase = EmojiHashMap()
 
         // Assigns widgets to objects
         mTextInput = findViewById(R.id.main_text_input) as EditText
-//        mSaveText = (Button) findViewById(R.id.main_save_text);
-        mCopyText = findViewById(R.id.main_copy_text) as ImageView
         mEmojifyText = findViewById(R.id.main_emojify_text) as Button
         mSaveBar = findViewById(R.id.main_save_bar) as LinearLayout
+        mSaveText = findViewById(R.id.main_save_text) as ImageView
         mTextOutput = findViewById(R.id.main_text_output) as TextView
         mCopyBar = findViewById(R.id.main_copy_bar) as LinearLayout
+        mCopyText = findViewById(R.id.main_copy_text) as ImageView
         mRecentTextList = findViewById(R.id.main_recent_text_list) as RecyclerView
 
+        mEmojifyText.setOnClickListener {
+            mTextOutput.text = emojifyString(mTextInput.text.toString())
+        }
+
         mSaveText.setOnClickListener {
+
+        }
+
+        mCopyText.setOnClickListener {
             var clipboardManager: ClipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             var emojifiedText: ClipData = ClipData.newPlainText("Emojified Text", mTextOutput.text)
             clipboardManager.primaryClip(emojifiedText)
-            Toast.makeText(MainActivity.this, "Emojification copied", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Emojification copied", Toast.LENGTH_LONG).show()
         }
 
         mTextInput.minLines = 3
@@ -70,10 +78,6 @@ class MainActivity : AppCompatActivity() {
                 handled = true
             }
             handled
-        }
-
-        mEmojifyText.setOnClickListener {
-            var output = emojifyString(mTextInput.text.toString())
         }
     }
 
