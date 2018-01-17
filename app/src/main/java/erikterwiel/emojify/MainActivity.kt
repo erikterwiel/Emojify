@@ -5,11 +5,14 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.support.v4.widget.DrawerLayout
+import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
@@ -27,6 +30,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mRecentEditor: SharedPreferences.Editor
     private lateinit var mSavedEditor: SharedPreferences.Editor
 
+    private lateinit var mDrawerLayout: DrawerLayout
+    private lateinit var mToggle: ActionBarDrawerToggle
+
     private lateinit var mTextInput: EditText
     private lateinit var mEmojifyText: Button
     private lateinit var mSaveBar: LinearLayout
@@ -41,6 +47,13 @@ class MainActivity : AppCompatActivity() {
         Log.i(TAG, "onCreate() called")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        mDrawerLayout = findViewById(R.id.main_drawer) as DrawerLayout
+        mToggle = ActionBarDrawerToggle(
+                this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close)
+        mDrawerLayout.addDrawerListener(mToggle)
+        mToggle.syncState()
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         // Loads recent texts
         mRecentTexts = FixedArrayList()
@@ -113,6 +126,11 @@ class MainActivity : AppCompatActivity() {
         mRecentTextList = findViewById(R.id.main_recent_text_list) as RecyclerView
         mRecentTextList.layoutManager = LinearLayoutManager(this)
         updateUI()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (mToggle.onOptionsItemSelected(item)) return true
+        return super.onOptionsItemSelected(item)
     }
 
     private fun updateUI() {

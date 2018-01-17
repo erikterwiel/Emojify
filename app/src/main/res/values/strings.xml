@@ -3,6 +3,8 @@
     <string name="main_hint">Tap to enter text</string>
     <string name="emojify">Emojify</string>
     <string name="emojification">EMOJIFICATION</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
     <string name="drawer_home">Home</string>
     <string name="drawer_saved">Saved</string>
 </resources>
