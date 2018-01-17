@@ -75,7 +75,12 @@ class MainActivity : AppCompatActivity() {
         mEmojifyText.setOnClickListener {
             mTextOutput.text = emojifyString(mTextInput.text.toString())
             mRecentTexts.enqueue(mTextOutput.text.toString())
-            mRecentAdapter.itemAdded(mRecentTexts.size - 1)
+            Log.i(TAG, mRecentTexts.size.toString())
+            if (mRecentTexts.size == 10) {
+                updateUI()
+            } else {
+                mRecentAdapter.itemAdded(mRecentTexts.size - 1)
+            }
         }
 
         mSaveText.setOnClickListener {
@@ -105,9 +110,13 @@ class MainActivity : AppCompatActivity() {
             handled
         }
 
-        mRecentAdapter = RecentAdapter(mRecentTexts)
         mRecentTextList = findViewById(R.id.main_recent_text_list) as RecyclerView
         mRecentTextList.layoutManager = LinearLayoutManager(this)
+        updateUI()
+    }
+
+    private fun updateUI() {
+        mRecentAdapter = RecentAdapter(mRecentTexts)
         mRecentTextList.adapter = mRecentAdapter
     }
 
