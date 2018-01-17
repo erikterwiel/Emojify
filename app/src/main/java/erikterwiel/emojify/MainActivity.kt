@@ -3,6 +3,7 @@ package erikterwiel.emojify
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
@@ -12,15 +13,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.*
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
     private val TAG = "MainActivity.kt"
 
     private lateinit var mDatabase: EmojiHashMap
-    private lateinit var mRecentTexts: PriorityQueue<String>
+    private lateinit var mRecentTexts: Queue
     private lateinit var mRecentAdapter: RecentAdapter
+    private lateinit var mRecentEditor: SharedPreferences.Editor
+    private lateinit var mSavedEditor: SharedPreferences.Editor
 
     private lateinit var mTextInput: EditText
     private lateinit var mEmojifyText: Button
@@ -31,7 +33,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mCopyText: ImageView
     private lateinit var mRecentTextList: RecyclerView
 
-    override fun onCreate(savedInstanceState: Bundle) {
+    override fun onCreate(savedInstanceState: Bundle?) {
 
         Log.i(TAG, "onCreate() called")
         super.onCreate(savedInstanceState)
@@ -39,6 +41,20 @@ class MainActivity : AppCompatActivity() {
 
         // Loads recent texts
         mRecentTexts = Queue(10)
+        val recentStorage = getSharedPreferences("recent", Context.MODE_PRIVATE)
+        mRecentEditor = recentStorage.edit()
+        if (recentStorage.contains("size")) {
+            for (i in 0 until recentStorage.getInt("size")) {
+                mRecentTexts.enqueue(recentStorage.getString("storage" + i, null))
+            }
+        } else {
+            mRecentEditor.putInt("size", 0)
+            mRecentEditor.apply()
+        }
+
+        // Loads saved texts editor
+        val savedStorage = getSharedPreferences("saved", Context.MODE_PRIVATE)
+        mSavedEditor = savedStorage.edit()
 
         // Creates the database
         mDatabase = EmojiHashMap()
@@ -55,15 +71,16 @@ class MainActivity : AppCompatActivity() {
 
         mEmojifyText.setOnClickListener {
             mTextOutput.text = emojifyString(mTextInput.text.toString())
+            mRecentTexts.enqueue(mTextOutput.text.toString())
         }
 
         mSaveText.setOnClickListener {
-
         }
 
         mCopyText.setOnClickListener {
-            var clipboardManager: ClipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            var emojifiedText: ClipData = ClipData.newPlainText("Emojified Text", mTextOutput.text)
+            val clipboardManager: ClipboardManager =
+                    getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val emojifiedText = ClipData.newPlainText("Emojified Text", mTextOutput.text)
             clipboardManager.primaryClip(emojifiedText)
             Toast.makeText(this, "Emojification copied", Toast.LENGTH_LONG).show()
         }
@@ -79,11 +96,6 @@ class MainActivity : AppCompatActivity() {
             }
             handled
         }
-    }
-
-    private fun updateUI() {
-        mRecentAdapter = RecentAdapter(mRecentTexts)
-        mRecentTextList.adapter = mRecentAdapter
     }
 
     private fun emojifyString(input: String): String {
@@ -117,22 +129,39 @@ class MainActivity : AppCompatActivity() {
         return output
     }
 
+    private fun updateUI() {
+        mRecentAdapter = RecentAdapter(mRecentTexts)
+        mRecentTextList.adapter = mRecentAdapter
+    }
 
-
-    private inner class RecentAdapter(val texts: ArrayList<String>) : RecyclerView.Adapter<RecentHolder>(){
-        private var recentTexts: ArrayList<String>
+    private inner class RecentAdapter(val texts: Queue) : RecyclerView.Adapter<RecentHolder>(){
+        private var recentTexts: Queue
 
         init {
             recentTexts = texts
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) {
-            var layoutInflater: LayoutInflater = LayoutInflater.from(MainActivity.this)
+            val layoutInflater: LayoutInflater = LayoutInflater.from(MainActivity.this)
             var view: View = layoutInflater.inflate(R.layout)
         }
     }
 
     private inner class RecentHolder : RecyclerView.ViewHolder {
+
+    }
+
+    override fun onStop() {
+
+        Log.i(TAG, "onStop() called")
+        super.onStop()
+
+        for (i in 0 until mRecentTexts.size()) {
+            mRecentEditor.putString("storage" + i, mRecentTexts.dequeue())
+        }
+        mRecentEditor.commit()
+
+        mSavedEditor.commit()
 
     }
 }
