@@ -1,25 +1,21 @@
 package erikterwiel.emojify
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import android.content.SharedPreferences
+import android.content.*
 import android.os.Bundle
+import android.support.design.widget.NavigationView
+import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.inputmethod.EditorInfo
 import android.widget.*
 import java.util.ArrayList
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private val TAG = "MainActivity.kt"
 
@@ -32,6 +28,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var mDrawerLayout: DrawerLayout
     private lateinit var mToggle: ActionBarDrawerToggle
+    private lateinit var mNavigationView: NavigationView
 
     private lateinit var mTextInput: EditText
     private lateinit var mEmojifyText: Button
@@ -48,12 +45,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // Loads navigation drawer
         mDrawerLayout = findViewById(R.id.main_drawer) as DrawerLayout
         mToggle = ActionBarDrawerToggle(
                 this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close)
         mDrawerLayout.addDrawerListener(mToggle)
         mToggle.syncState()
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        mNavigationView = findViewById(R.id.main_navigation) as NavigationView
+        mNavigationView.setNavigationItemSelectedListener(this)
 
         // Loads recent texts
         mRecentTexts = FixedArrayList()
@@ -128,8 +128,21 @@ class MainActivity : AppCompatActivity() {
         updateUI()
     }
 
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.drawer_home) {
+            mDrawerLayout.closeDrawer(GravityCompat.START)
+        } else if (item.itemId == R.id.drawer_saved) {
+            val activityIntent = Intent(this, SavedActivity::class.java)
+            mDrawerLayout.closeDrawer(GravityCompat.START)
+            startActivity(activityIntent)
+        }
+        return true
+    }
+
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (mToggle.onOptionsItemSelected(item)) return true
+        if (mToggle.onOptionsItemSelected(item)) {
+            return true
+        }
         return super.onOptionsItemSelected(item)
     }
 
