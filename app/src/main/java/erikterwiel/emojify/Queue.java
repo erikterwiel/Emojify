@@ -40,4 +40,12 @@ public class Queue {
             n += 1;
         }
     }
+
+    public String dequeue() {
+        String item = first.getItem();
+        first = first.getNext();
+        if (isEmpty()) last = null;
+        n -= 1;
+        return item;
+    }
 }
