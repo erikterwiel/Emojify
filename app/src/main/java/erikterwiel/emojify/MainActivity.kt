@@ -254,16 +254,33 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private inner class RecentHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private lateinit var mString: String
-        private lateinit var mRecentText: TextView
-        private lateinit var mSave: ImageView
+        private var mLayout: LinearLayout
+        private var mRecentText: TextView
+        private var mSave: ImageView
 
         init {
+            mLayout = itemView.findViewById(R.id.mainlist_layout) as LinearLayout
             mRecentText = itemView.findViewById(R.id.mainlist_recent_text) as TextView
             mSave = itemView.findViewById(R.id.mainlist_save_recent) as ImageView
         }
 
         fun bindRecent(string: String) {
             mString = string
+            mLayout.setOnClickListener {
+                mTextOutput.text = mString;
+                for (i in 0 until mSavedStorage.getInt("size", 0)) {
+                    if (mSavedStorage.getString("saved" + i, null) == mString) {
+                        mSaveText.setImageResource(R.drawable.ic_star_white_48dp)
+                        break
+                    }
+                    if (i == mSavedStorage.getInt("size", 0) - 1) {
+                        mSaveText.setImageResource(R.drawable.ic_star_border_white_48dp)
+                    }
+                }
+                mSaveBar.visibility = View.VISIBLE
+                mTextOutput.visibility = View.VISIBLE
+                mCopyBar.visibility = View.VISIBLE
+            }
             mRecentText.text = mString
             mSave.setOnClickListener {
                 if (mSavedStorage.getInt("size", 0) == 0) {
@@ -272,12 +289,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     mSavedEditor.putInt("size", mSavedStorage.getInt("size", 0) + 1)
                     mSavedEditor.apply()
                     mSave.setImageResource(R.drawable.ic_star_black_48dp)
+                    if (mTextOutput.text == mString) {
+                        mSaveText.setImageResource(R.drawable.ic_star_white_48dp)
+                    }
                 } else {
                     for (i in 0 until mSavedStorage.getInt("size", 0)) {
                         if (mSavedStorage.getString("saved" + i, null) == mString) {
                             mSavedEditor.putInt("size", mSavedStorage.getInt("size", 0) - 1)
                             mSavedEditor.apply()
                             mSave.setImageResource(R.drawable.ic_star_border_black_48dp)
+                            if (mTextOutput.text == mString) {
+                                mSaveText.setImageResource(R.drawable.ic_star_border_white_48dp)
+                            }
                             break
                         }
                         if (i == mSavedStorage.getInt("size", 0) - 1) {
@@ -286,6 +309,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                             mSavedEditor.putInt("size", mSavedStorage.getInt("size", 0) + 1)
                             mSavedEditor.apply()
                             mSave.setImageResource(R.drawable.ic_star_black_48dp)
+                            if (mTextOutput.text == mString) {
+                                mSaveText.setImageResource(R.drawable.ic_star_white_48dp)
+                            }
                         }
                     }
                 }
