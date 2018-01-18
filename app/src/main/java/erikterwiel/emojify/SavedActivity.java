@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,17 +34,22 @@ import java.util.ArrayList;
 public class SavedActivity
         extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    private final static String TAG = "SavedActivity.java";
+
     private ArrayList<String> mSavedStrings;
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
     private NavigationView mNavigationView;
 
+    private SharedPreferences mSharedStorage;
     private RecyclerView mRecyclerView;
     private SavedAdapter mRecyclerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Log.i(TAG, "onCreate() called");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved);
 
@@ -57,9 +63,9 @@ public class SavedActivity
         mNavigationView.setNavigationItemSelectedListener(this);
 
         mSavedStrings = new ArrayList<String>();
-        SharedPreferences sharedStorage = getSharedPreferences("saved", Context.MODE_PRIVATE);
-        for (int i = 0; i < sharedStorage.getInt("size", 0); i++) {
-            mSavedStrings.add(sharedStorage.getString("saved" + i, null));
+        mSharedStorage = getSharedPreferences("saved", Context.MODE_PRIVATE);
+        for (int i = 0; i < mSharedStorage.getInt("size", 0); i++) {
+            mSavedStrings.add(mSharedStorage.getString("saved" + i, null));
         }
         mRecyclerView = (RecyclerView) findViewById(R.id.saved_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -175,5 +181,20 @@ public class SavedActivity
                 }
             });
         }
+    }
+
+    @Override
+    protected void onStop() {
+
+        Log.i(TAG, "onStop() called");
+        super.onStop();
+
+        SharedPreferences.Editor savedEditor = mSharedStorage.edit();
+        savedEditor.putInt("size", mSavedStrings.size());
+        for (int i = 0; i < mSavedStrings.size(); i++) {
+            savedEditor.putString("saved" + i, mSavedStrings.get(i));
+        }
+        savedEditor.apply();
+
     }
 }
