@@ -31,7 +31,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_weight="0"
-            android:src="@drawable/ic_star_border_white_48dp"/>
+            android:src="@drawable/ic_delete_white_48dp"/>
     </LinearLayout>
     <TextView
         android:id="@+id/saved_text"

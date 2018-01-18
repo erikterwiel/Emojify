@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -19,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -133,6 +135,33 @@ public class SavedActivity
         }
 
         public void bindSaved(final String saved) {
+            mUnsaveText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    for (int i = 0; i < mSavedStrings.size(); i++) {
+                        if (mSavedStrings.get(i).equals(saved)) {
+                            final int position = i;
+                            final String deletedString = mSavedStrings.get(i);
+                            mSavedStrings.remove(i);
+                            mRecyclerAdapter.notifyItemRemoved(i);
+                            Snackbar notification = Snackbar.make(mRecyclerView,
+                                    "Emojification deleted", Snackbar.LENGTH_LONG);
+                            notification.setAction("UNDO", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Snackbar.make(mRecyclerView, "Emojification restored",
+                                            Snackbar.LENGTH_LONG).show();
+                                    mSavedStrings.add(position, deletedString);
+                                    mRecyclerAdapter.notifyItemInserted(position);
+                                    mRecyclerView.scrollToPosition(position);
+                                }
+                            });
+                            notification.show();
+                            break;
+                        }
+                    }
+                }
+            });
             mSavedText.setText(saved);
             mCopyText.setOnClickListener(new View.OnClickListener() {
                 @Override
