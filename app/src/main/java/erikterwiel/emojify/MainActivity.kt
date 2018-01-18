@@ -13,7 +13,6 @@ import android.util.Log
 import android.view.*
 import android.view.inputmethod.EditorInfo
 import android.widget.*
-import java.util.ArrayList
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -90,19 +89,27 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         mSaveText.setOnClickListener {
-            for (i in 0 until mSavedStorage.getInt("size", 0)) {
-                if (mSavedStorage.getString("saved" + i, null) == mTextOutput.text.toString()) {
-                    mSavedEditor.putInt("size", mSavedStorage.getInt("size", 0) - 1)
-                    mSavedEditor.apply()
-                    mSaveText.setImageResource(R.drawable.ic_star_border_white_48dp)
-                    break
-                }
-                if (i == mSavedStorage.getInt("size", 0) - 1) {
-                    mSavedEditor.putString(
-                            "saved" + mSavedStorage.getInt("size", 0), mTextOutput.text.toString())
-                    mSavedEditor.putInt("size", mSavedStorage.getInt("size", 0) + 1)
-                    mSavedEditor.apply()
-                    mSaveText.setImageResource(R.drawable.ic_star_white_48dp)
+            if (mSavedStorage.getInt("size", 0) == 0) {
+                mSavedEditor.putString(
+                        "saved" + mSavedStorage.getInt("size", 0), mTextOutput.text.toString())
+                mSavedEditor.putInt("size", mSavedStorage.getInt("size", 0) + 1)
+                mSavedEditor.apply()
+                mSaveText.setImageResource(R.drawable.ic_star_white_48dp)
+            } else {
+                for (i in 0 until mSavedStorage.getInt("size", 0)) {
+                    if (mSavedStorage.getString("saved" + i, null) == mTextOutput.text.toString()) {
+                        mSavedEditor.putInt("size", mSavedStorage.getInt("size", 0) - 1)
+                        mSavedEditor.apply()
+                        mSaveText.setImageResource(R.drawable.ic_star_border_white_48dp)
+                        break
+                    }
+                    if (i == mSavedStorage.getInt("size", 0) - 1) {
+                        mSavedEditor.putString(
+                                "saved" + mSavedStorage.getInt("size", 0), mTextOutput.text.toString())
+                        mSavedEditor.putInt("size", mSavedStorage.getInt("size", 0) + 1)
+                        mSavedEditor.apply()
+                        mSaveText.setImageResource(R.drawable.ic_star_white_48dp)
+                    }
                 }
             }
         }
@@ -243,19 +250,27 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             mString = string
             mRecentText.text = mString
             mSave.setOnClickListener {
-                for (i in 0 until mSavedStorage.getInt("size", 0)) {
-                    if (mSavedStorage.getString("saved" + i, null) == mString) {
-                        mSavedEditor.putInt("size", mSavedStorage.getInt("size", 0) - 1)
-                        mSavedEditor.apply()
-                        mSave.setImageResource(R.drawable.ic_star_border_black_48dp)
-                        break
-                    }
-                    if (i == mSavedStorage.getInt("size", 0) - 1) {
-                        mSavedEditor.putString(
-                                "saved" + mSavedStorage.getInt("size", 0), mString)
-                        mSavedEditor.putInt("size", mSavedStorage.getInt("size", 0) + 1)
-                        mSavedEditor.apply()
-                        mSave.setImageResource(R.drawable.ic_star_black_48dp)
+                if (mSavedStorage.getInt("size", 0) == 0) {
+                    mSavedEditor.putString(
+                            "saved" + mSavedStorage.getInt("size", 0), mString)
+                    mSavedEditor.putInt("size", mSavedStorage.getInt("size", 0) + 1)
+                    mSavedEditor.apply()
+                    mSave.setImageResource(R.drawable.ic_star_black_48dp)
+                } else {
+                    for (i in 0 until mSavedStorage.getInt("size", 0)) {
+                        if (mSavedStorage.getString("saved" + i, null) == mString) {
+                            mSavedEditor.putInt("size", mSavedStorage.getInt("size", 0) - 1)
+                            mSavedEditor.apply()
+                            mSave.setImageResource(R.drawable.ic_star_border_black_48dp)
+                            break
+                        }
+                        if (i == mSavedStorage.getInt("size", 0) - 1) {
+                            mSavedEditor.putString(
+                                    "saved" + mSavedStorage.getInt("size", 0), mString)
+                            mSavedEditor.putInt("size", mSavedStorage.getInt("size", 0) + 1)
+                            mSavedEditor.apply()
+                            mSave.setImageResource(R.drawable.ic_star_black_48dp)
+                        }
                     }
                 }
             }
