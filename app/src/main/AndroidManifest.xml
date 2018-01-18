@@ -16,7 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SavedActivity"></activity>
+        <activity
+            android:name=".SavedActivity"
+            android:label="@string/saved_label"/>
     </application>
 
 </manifest>

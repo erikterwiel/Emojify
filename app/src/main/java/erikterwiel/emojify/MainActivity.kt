@@ -141,13 +141,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mRecentTextList = findViewById(R.id.main_recent_text_list) as RecyclerView
         mRecentTextList.layoutManager = LinearLayoutManager(this)
         updateUI()
-
-        val testButton: Button = findViewById(R.id.test_button) as Button
-        testButton.setOnClickListener {
-            for (i in 0 until recentStorage.getInt("size", 0)) {
-                Log.i(TAG, recentStorage.getString("recent" + i, null))
-            }
-        }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

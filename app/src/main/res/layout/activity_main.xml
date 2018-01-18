@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <FrameLayout
-        android:id="@+id/content_frame"
+        android:id="@+id/main_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
         <android.support.v4.widget.NestedScrollView
@@ -17,11 +17,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-                <Button
-                    android:id="@+id/test_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Output Saved Strings To Console"/>
                 <EditText
                     android:id="@+id/main_text_input"
                     android:layout_width="match_parent"
@@ -51,6 +46,10 @@
                         android:text="@string/emojify"
                         android:textColor="@color/e_primary"/>
                 </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/e_background"/>
                 <LinearLayout
                     android:id="@+id/main_save_bar"
                     android:layout_width="match_parent"
@@ -120,7 +119,6 @@
         </android.support.v4.widget.NestedScrollView>
 
     </FrameLayout>
-    <!-- The navigation drawer -->
     <android.support.design.widget.NavigationView
         android:id="@+id/main_navigation"
         android:layout_width="wrap_content"

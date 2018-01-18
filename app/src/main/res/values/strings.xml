@@ -7,4 +7,5 @@
     <string name="drawer_close">Close</string>
     <string name="drawer_home">Home</string>
     <string name="drawer_saved">Saved</string>
+    <string name="saved_label">Saved Emojifications</string>
 </resources>
