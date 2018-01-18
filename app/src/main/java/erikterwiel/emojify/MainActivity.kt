@@ -86,21 +86,36 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mRecentTextList = findViewById(R.id.main_recent_text_list) as RecyclerView
 
         mEmojifyText.setOnClickListener {
-            mTextOutput.text = emojifyString(mTextInput.text.toString())
-            mRecentTexts.enqueue(mTextOutput.text.toString())
-            Log.i(TAG, mRecentTexts.size.toString())
-            if (mRecentTexts.size == 10) {
-                updateUI()
+            if (mTextInput.text.toString() != "") {
+                mTextOutput.text = emojifyString(mTextInput.text.toString())
+                mRecentTexts.enqueue(mTextOutput.text.toString())
+                if (mRecentTexts.size == 10) {
+                    updateUI()
+                } else {
+                    mRecentAdapter.itemAdded(mRecentTexts.size - 1)
+                }
+                mSaveText.setImageResource(R.drawable.ic_star_border_white_48dp)
             } else {
-                mRecentAdapter.itemAdded(mRecentTexts.size - 1)
+                Toast.makeText(this, "Please enter input", Toast.LENGTH_LONG).show()
             }
         }
 
         mSaveText.setOnClickListener {
-            mSavedEditor.putString(
-                    "saved" + mSavedStorage.getInt("size", 0), mTextOutput.text.toString())
-            mSavedEditor.putInt("size", mSavedStorage.getInt("size", 0) + 1)
-            mSavedEditor.apply()
+            for (i in 0 until mSavedStorage.getInt("size", 0)) {
+                if (mSavedStorage.getString("saved" + i, null) == mTextOutput.text.toString()) {
+                    mSavedEditor.putInt("size", mSavedStorage.getInt("size", 0) - 1)
+                    mSavedEditor.apply()
+                    mSaveText.setImageResource(R.drawable.ic_star_border_white_48dp)
+                    break
+                }
+                if (i == mSavedStorage.getInt("size", 0) - 1) {
+                    mSavedEditor.putString(
+                            "saved" + mSavedStorage.getInt("size", 0), mTextOutput.text.toString())
+                    mSavedEditor.putInt("size", mSavedStorage.getInt("size", 0) + 1)
+                    mSavedEditor.apply()
+                    mSaveText.setImageResource(R.drawable.ic_star_white_48dp)
+                }
+            }
         }
 
         mCopyText.setOnClickListener {
@@ -126,6 +141,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mRecentTextList = findViewById(R.id.main_recent_text_list) as RecyclerView
         mRecentTextList.layoutManager = LinearLayoutManager(this)
         updateUI()
+
+        val testButton: Button = findViewById(R.id.test_button) as Button
+        testButton.setOnClickListener {
+            for (i in 0 until recentStorage.getInt("size", 0)) {
+                Log.i(TAG, recentStorage.getString("recent" + i, null))
+            }
+        }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -224,10 +246,26 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             mString = string
             mRecentText.text = mString
             mSave.setOnClickListener {
-                mSavedEditor.putString(
-                        "saved" + mSavedStorage.getInt("size", 0), mTextOutput.text.toString())
-                mSavedEditor.putInt("size", mSavedStorage.getInt("size", 0) + 1)
-                mSavedEditor.apply()
+                for (i in 0 until mSavedStorage.getInt("size", 0)) {
+                    if (mSavedStorage.getString("saved" + i, null) == mString) {
+                        mSavedEditor.putInt("size", mSavedStorage.getInt("size", 0) - 1)
+                        mSavedEditor.apply()
+                        mSave.setImageResource(R.drawable.ic_star_border_black_48dp)
+                        break
+                    }
+                    if (i == mSavedStorage.getInt("size", 0) - 1) {
+                        mSavedEditor.putString(
+                                "saved" + mSavedStorage.getInt("size", 0), mString)
+                        mSavedEditor.putInt("size", mSavedStorage.getInt("size", 0) + 1)
+                        mSavedEditor.apply()
+                        mSave.setImageResource(R.drawable.ic_star_black_48dp)
+                    }
+                }
+            }
+            for (i in 0 until mSavedStorage.getInt("size", 0)) {
+                if (mSavedStorage.getString("saved" + i, null) == mString) {
+                    mSave.setImageResource(R.drawable.ic_star_black_48dp)
+                }
             }
         }
     }

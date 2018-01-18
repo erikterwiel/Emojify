@@ -10,7 +10,7 @@ public class FixedArrayList<E> extends ArrayList<E> {
             remove(9);
             insert(item);
         } else {
-            insert(item);
+            add(item);
         }
     }
     public void insert(E item) {

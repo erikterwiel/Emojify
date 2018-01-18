@@ -17,6 +17,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+                <Button
+                    android:id="@+id/test_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Output Saved Strings To Console"/>
                 <EditText
                     android:id="@+id/main_text_input"
                     android:layout_width="match_parent"
