@@ -196,7 +196,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     if (i == numOfEmoji - 1) output += " "
                 }
             } else {
-                output += upperCaseInput + " "
+                if ((Math.random() * 2).toInt() == 0) {
+                    val emojiList = mDatabase["******"]
+                    val numOfEmoji = (Math.random() * 4 + 1).toInt()
+                    val wordPosition = (Math.random() * numOfEmoji).toInt()
+                    for (i in 0 until numOfEmoji) {
+                        if (i == wordPosition) {
+                            output += upperCaseInput
+                        } else {
+                            if (!emojiList!!.isEmpty())
+                                output += emojiList!!.get((Math.random() * emojiList!!.size).toInt())
+                        }
+                        if (i == numOfEmoji - 1) output += " "
+                    }
+                } else {
+                    output += upperCaseInput + " "
+                }
             }
         }
         if (input != "") {

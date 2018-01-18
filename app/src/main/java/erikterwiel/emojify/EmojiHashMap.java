@@ -10,6 +10,22 @@ public class EmojiHashMap extends HashMap<String, ArrayList<String>> {
     public EmojiHashMap() {
         super();
 
+        emojiList.add(getEmoji(0x1F602));
+        emojiList.add(getEmoji(0x1F639));
+        emojiList.add(getEmoji(0x1F44C));
+        emojiList.add(getEmoji(0x1F64C));
+        emojiList.add(getEmoji(0x1F4A5));
+        emojiList.add(getEmoji(0x1F4A3));
+        emojiList.add(getEmoji(0x1F525));
+        emojiList.add(getEmoji(0x1F525));
+        emojiList.add(getEmoji(0x1F4AF));
+        emojiList.add(getEmoji(0x1F4AF));
+        emojiList.add(getEmoji(0x1F605));
+        emojiList.add(getEmoji(0x1F606));
+        put("******", emojiList);
+
+
+        clearList();
         emojiList.add(getEmoji(0x1F4AF)); // 100
         put("be", emojiList);
         put("real", emojiList);
