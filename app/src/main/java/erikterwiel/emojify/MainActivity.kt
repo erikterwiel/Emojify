@@ -86,18 +86,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mRecentTextList = findViewById(R.id.main_recent_text_list) as RecyclerView
 
         mEmojifyText.setOnClickListener {
-            if (mTextInput.text.toString() != "") {
-                mTextOutput.text = emojifyString(mTextInput.text.toString())
-                mRecentTexts.enqueue(mTextOutput.text.toString())
-                if (mRecentTexts.size == 10) {
-                    updateUI()
-                } else {
-                    mRecentAdapter.itemAdded(mRecentTexts.size - 1)
-                }
-                mSaveText.setImageResource(R.drawable.ic_star_border_white_48dp)
-            } else {
-                Toast.makeText(this, "Please enter input", Toast.LENGTH_LONG).show()
-            }
+            emojifyAttempt()
         }
 
         mSaveText.setOnClickListener {
@@ -132,7 +121,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mTextInput.setOnEditorActionListener { v, actionId, event ->
             var handled = false
             if (actionId == EditorInfo.IME_ACTION_GO) {
-                val output = emojifyString(mTextInput.text.toString())
+                emojifyAttempt()
                 handled = true
             }
             handled
@@ -141,6 +130,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mRecentTextList = findViewById(R.id.main_recent_text_list) as RecyclerView
         mRecentTextList.layoutManager = LinearLayoutManager(this)
         updateUI()
+    }
+
+    private fun emojifyAttempt() {
+        if (mTextInput.text.toString() != "") {
+            mTextOutput.text = emojifyString(mTextInput.text.toString())
+            mRecentTexts.enqueue(mTextOutput.text.toString())
+            if (mRecentTexts.size == 10) {
+                updateUI()
+            } else {
+                mRecentAdapter.itemAdded(mRecentTexts.size - 1)
+            }
+            mSaveText.setImageResource(R.drawable.ic_star_border_white_48dp)
+        } else {
+            Toast.makeText(this, "Please enter input", Toast.LENGTH_LONG).show()
+        }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

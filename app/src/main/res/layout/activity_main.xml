@@ -33,6 +33,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
                     android:gravity="end"
                     android:background="@android:color/white"
                     android:orientation="horizontal">
@@ -46,17 +47,12 @@
                         android:text="@string/emojify"
                         android:textColor="@color/e_primary"/>
                 </LinearLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/e_background"/>
                 <LinearLayout
                     android:id="@+id/main_save_bar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:layout_marginTop="8dp"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
                     android:paddingTop="16dp"
@@ -114,7 +110,10 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/main_recent_text_list"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"/>
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
 
