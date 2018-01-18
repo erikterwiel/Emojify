@@ -112,6 +112,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     }
                 }
             }
+            updateUI()
         }
 
         mCopyText.setOnClickListener {
