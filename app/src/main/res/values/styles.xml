@@ -15,4 +15,10 @@
         <item name="colorAccent">@color/e_accent</item>
     </style>
 
+    <style
+        name="splash_screen"
+        parent="Emojify">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+    </style>
+
 </resources>
