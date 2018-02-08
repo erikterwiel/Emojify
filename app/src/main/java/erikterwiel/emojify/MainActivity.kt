@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onCreate(savedInstanceState: Bundle?) {
 
         Log.i(TAG, "onCreate() called")
+        setTheme(R.style.Emojify);
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
